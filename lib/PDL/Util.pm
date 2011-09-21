@@ -60,6 +60,17 @@ sub import {
 
 =head2 add_pdl_method
 
+ add_pdl_method({'my_method' => sub { ... });
+ $pdl->my_method 	# calls the anonymous sub on $pdl
+
+ add_pdl_method(['export2d']);
+ $pdl->export2d()	# calls 'export2d' on $pdl
+
+ add_pdl_method({'my_unroll' => 'unroll'});
+ $pdl->my_unroll()	# calls 'unroll' method on $pdl
+
+C<add_pdl_method> pushes subroutines into the PDL namespace. It takes a single argument, a reference either an array or hash. The keys of the hash reference are the method name that will be used in the call (e.g. C<$pdl->method_name>, the values are either a reference to a subroutine or a string containing the name of a method provided by L<PDL::Util>. The array reference form can only take names of C<PDL::Util> methods.
+
 =cut
 
 sub add_pdl_method {
@@ -95,9 +106,17 @@ MESSAGE
 
 =head1 TAG :methods
 
-Again, the FUNCTIONS provided in the method tag are not automatically methods. They simply are function which are called with a PDL object (piddle) as their first argument. This function ARE available to be imported into the PDL namespace using the L<add_pdl_method> function describe above.
+Again, the I<functions> provided in the method tag are not automatically methods. They simply are function which are called with a PDL object (piddle) as their first argument. This function ARE available to be imported into the PDL namespace using the L<add_pdl_method> function describe above.
 
 =head2 unroll
+
+ $AoA = unroll($pdl);
+   -- or --
+ $AoA = $pdl->unroll();
+
+L<PDL> provides a function for constructing a PDL object (piddle) from a Perl nested array, however it does not provide a tool to convert a piddle to a nested array structure. The closest function is the C<list> function, which returns the elements of the piddle as a list, i.e. a 1D flattened array. C<unroll> converts piddles to a native Perl data structure; it can be thought of as the logical inverse of the C<pdl> function in that C<pdl(unroll($pdl))> should return the original data structure, although bad values and data types may be changed. 
+
+When called as a function C<unroll> takes a single argument (the piddle to unroll). When used as a method it takes no arguments. It returns a reference to an array containing the Perl equivalent data structure. 
 
 =cut
 
@@ -111,7 +130,8 @@ sub unroll {
      return [list $pdl];
    }
  } else {
-   return $pdl;
+   croak "Attempted to unroll a non-PDL object";
+   #return $pdl;
  }
 
 }
@@ -171,4 +191,18 @@ sub export2d {
 
 1;
 
+=head1 SOURCE REPOSITORY
+
+L<http://github.com/jberger/PDL-Util>
+
+=head1 AUTHOR
+
+Joel Berger, E<lt>joel.a.berger@gmail.comE<gt>
+
+=head1 COPYRIGHT AND LICENSE
+
+Copyright (C) 2011 by Joel Berger
+
+This library is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself.
 
