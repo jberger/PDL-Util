@@ -117,7 +117,7 @@ PDL::Util
 =head1 SYNOPSIS
 
  use PDL;
- use PDL::Util;
+ use PDL::Util 'export2d';
 
  my $pdl = rvals(6,4);
 
