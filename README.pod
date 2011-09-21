@@ -1,0 +1,18 @@
+=head1 NAME
+
+PDL::Util
+
+=head1 SYNOPSIS
+
+ use PDL;
+ use PDL::Util;
+
+ my $pdl = rvals(6,4);
+
+ open my $fh, '>', 'file.dat';
+ export2d($pdl, $fh);
+
+=head1 DESCRIPTION
+
+Convenient utility functions/methods for use with PDL.
+
