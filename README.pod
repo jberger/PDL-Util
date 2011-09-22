@@ -29,7 +29,7 @@ If an array reference or hash reference is passed as the last item in the import
 
 =head2 add_pdl_method
 
- add_pdl_method({'my_method' => sub { ... });
+ add_pdl_method({'my_method' => sub { my $self = shift; ... });
  $pdl->my_method 	# calls the anonymous sub on $pdl
 
  add_pdl_method(['export2d']);
@@ -38,7 +38,9 @@ If an array reference or hash reference is passed as the last item in the import
  add_pdl_method({'my_unroll' => 'unroll'});
  $pdl->my_unroll()	# calls 'unroll' method on $pdl
 
-C<add_pdl_method> pushes subroutines into the PDL namespace. It takes a single argument, a reference either an array or hash. The keys of the hash reference are the method name that will be used in the call (e.g. C<$pdl->method_name>, the values are either a reference to a subroutine or a string containing the name of a method provided by L<PDL::Util>. The array reference form can only take names of C<PDL::Util> methods.
+C<add_pdl_method> pushes subroutines into the PDL namespace. It takes a single argument, a reference either an array or hash. The keys of the hash reference are the method name that will be used in the call (e.g. C<< $pdl->method_name >>, the values are either a reference to a subroutine or a string containing the name of a method provided by L<PDL::Util>. The array reference form can only take names of C<PDL::Util> methods.
+
+When adding your own subroutine as a PDL method, be aware that the first argument passed will be a self (i.e. C<$self>) reference, in the normal Perl OO manner.
 
 =head1 TAG :methods
 
