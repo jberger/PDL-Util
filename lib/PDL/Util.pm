@@ -41,9 +41,9 @@ $EXPORT_TAGS{'all'} = \@EXPORT_OK;
  use PDL:Util 'export2d', ['unroll'] 
  # imports 'export2d', adds 'unroll' as a PDL method
 
-PDL::Util does not export anything by default. A list of symbols may be imported as usual. The exportable symbols come in two types, functions (tag ':function') and methods (tag ':methods'). The word 'methods' here is a strange word. When importing symbols one does not import methods. In this context a 'method' is a function which expects a piddle as its first argument. However, there is a reason ...
+L<PDL::Util> does not export anything by default. A list of symbols may be imported as usual. The exportable symbols come in two types, functions (tag C<:function>) and methods (tag C<:methods>). The word I<methods> here is a strange word. When importing symbols one does not import methods. In this context a 'method' is a function which expects a piddle as its first argument. However, there is a reason ...
 
-If an array reference or hash reference is passed as the last item in the import list, the reference will be passed to the L<add_pdl_method> function below, in which case these functions are imported into the PDL namespace and may be used as method calls. Note, when doing this for symbols from the PDL::Util module, only those listed in the ':methods' tag may be added as a method (this is the origin of the confusing terminology). Read about the L<add_pdl_method> function carefully before using this functionality.
+If an array reference or hash reference is passed as the last item in the import list, the reference will be passed to the L<add_pdl_method> function below, in which case these functions are imported into the C<PDL> namespace and may be used as method calls. Note, when doing this for symbols from the L<PDL::Util> module, only those listed in the C<:methods> tag may be added as a method (this is the origin of the confusing terminology). Read about the L<add_pdl_method> function carefully before using this functionality.
 
 =cut
 
@@ -74,7 +74,7 @@ sub import {
 
 C<add_pdl_method> pushes subroutines into the PDL namespace. It takes a single argument, a reference either an array or hash. The keys of the hash reference are the method name that will be used in the call (e.g. C<< $pdl->method_name >>, the values are either a reference to a subroutine or a string containing the name of a method provided by L<PDL::Util>. The array reference form can only take names of C<PDL::Util> methods.
 
-When adding your own subroutine as a PDL method, be aware that the first argument passed will be a self (i.e. C<$self>) reference, in the normal Perl OO manner.
+When adding your own subroutine as a L<PDL> method, be aware that the first argument passed will be a self (i.e. C<$self>) reference, in the normal Perl OO manner.
 
 =cut
 
@@ -147,7 +147,7 @@ sub unroll {
    -- or --
  $pdl->export2d($fh, ',');
 
-C<export2d> may take up to 2 optional arguments (neglecting the piddle), a lexical filehandle (or globref, e.g. C<\*FILE>) to write to, and a string containing a column separator. The defaults, if arguments are not given are to print to STDOUT and use a single space as the column separator. The order does not matter, the method will determine whether an argument refers to a file or not. This is done so that one may call either
+C<export2d> may take up to 2 optional arguments (neglecting the object reference), a lexical filehandle (or globref, e.g. C<\*FILE>) to write to, and a string containing a column separator. The defaults, if arguments are not given are to print to STDOUT and use a single space as the column separator. The order does not matter, the method will determine whether an argument refers to a file or not. This is done so that one may call either
 
  $pdl->export2d($fh);
  $pdl->export2d(',');
@@ -195,6 +195,11 @@ sub export2d {
 }
 
 1;
+
+=head1 SEE ALSO
+
+L<PDL>
+L<Website|http://pdl.perl.org>
 
 =head1 SOURCE REPOSITORY
 
