@@ -38,9 +38,12 @@ $EXPORT_TAGS{'all'} = \@EXPORT_OK;
 
 =head1 IMPORT
 
-PDL::Util does not export anything by default. The exportable symbols come in two types, functions and methods. Methods is a strange word. When importing symbols one does not import methods. In this context a 'method' is a function which expects a piddle as its first argument. 
+ use PDL:Util 'export2d', ['unroll'] 
+ # imports 'export2d', adds 'unroll' as a PDL method
 
-A list of symbols may be imported as usual. Tags may be imported as ':functions' and ':methods'. More interestingly if an array reference or hash reference is passed as the last item in the import list, its contents will be passed to the L<add_pdl_method> function below, in which case these functions are imported into the PDL namespace and may be used as method calls. Note, when doing this for symbols from the PDL::Util module, only those listed in the ':methods' tag may be added as a method (this is the origin of the confusing terminology). Read carefully before using this functionality.
+PDL::Util does not export anything by default. A list of symbols may be imported as usual. The exportable symbols come in two types, functions (tag ':function') and methods (tag ':methods'). The word 'methods' here is a strange word. When importing symbols one does not import methods. In this context a 'method' is a function which expects a piddle as its first argument. However, there is a reason ...
+
+If an array reference or hash reference is passed as the last item in the import list, the reference will be passed to the L<add_pdl_method> function below, in which case these functions are imported into the PDL namespace and may be used as method calls. Note, when doing this for symbols from the PDL::Util module, only those listed in the ':methods' tag may be added as a method (this is the origin of the confusing terminology). Read about the L<add_pdl_method> function carefully before using this functionality.
 
 =cut
 
@@ -142,7 +145,7 @@ sub unroll {
    -- or --
  $pdl->export2d($fh, ',');
 
-C<export2d> may take up to 2 optional arguments, a lexical filehandle (or globref, e.g. C<\*FILE>) to write to, and a string containing a column separator. The defaults, if arguments are not given are to print to STDOUT and use a single space as the column separator. The order does not matter, the method will determine whether an argument refers to a file or not. This is done so that one may call either
+C<export2d> may take up to 2 optional arguments (neglecting the piddle), a lexical filehandle (or globref, e.g. C<\*FILE>) to write to, and a string containing a column separator. The defaults, if arguments are not given are to print to STDOUT and use a single space as the column separator. The order does not matter, the method will determine whether an argument refers to a file or not. This is done so that one may call either
 
  $pdl->export2d($fh);
  $pdl->export2d(',');
