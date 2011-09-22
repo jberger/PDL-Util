@@ -1,5 +1,8 @@
 package PDL::Util;
 
+use strict;
+use warnings;
+
 =head1 NAME
 
 PDL::Util
@@ -161,12 +164,12 @@ The method returns the number of columns that were written.
 sub export2d {
   my ($pdl, $fh, $sep);
   $pdl = shift;
-  unless (ref $pdl eq 'PDL') {
-    carp "cannot call $method_name without a piddle input";
+  unless ( blessed($pdl) and $pdl->isa('PDL') ) {
+    carp "cannot call export2d without a piddle input";
     return 0;
   }
   unless ($pdl->ndims == 2) {
-    carp "$method_name may only be called on a 2D piddle";
+    carp "export2d may only be called on a 2D piddle";
     return 0;
   }
 
