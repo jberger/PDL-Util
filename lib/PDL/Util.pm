@@ -114,7 +114,7 @@ MESSAGE
 
 =head1 TAG :methods
 
-Again, the I<functions> provided in the method tag are not automatically methods. They simply are function which are called with a PDL object (piddle) as their first argument. This function ARE available to be imported into the PDL namespace using the L<add_pdl_method> function describe above.
+Again, the I<functions> provided in the method tag are not automatically methods. They simply are function which are called with a PDL object (piddle) as their first argument. These functions I<are> available to be imported into the PDL namespace using the L<add_pdl_method> function describe above.
 
 =head2 unroll
 
